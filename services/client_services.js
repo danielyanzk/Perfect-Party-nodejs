@@ -42,19 +42,20 @@ module.exports = {
          return JSON.stringify(res.rows)
      },
 
-     getClientInfo: async function() {
+     getClientName: async function(id) {
       const client = await pool.connect()
   
       try {
-        const res = await client.query("SELECT json_build_object('address',address) from client")
+        res = await client.query("select c.clientname from client c where c.clientid = " + id)
+        console.log('clientname')
+        //console.log(res.rows)
       } 
       catch (err) {
-        throw err
+        return { "result": "get clientName failed" }
       }
       finally {
         client.release()
       }
-      console.log(res.rows)
       return res.rows
     },
  
